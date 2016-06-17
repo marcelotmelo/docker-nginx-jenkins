@@ -19,17 +19,15 @@ services:
       - "8080"
       - "5000"
   slave0:
-    image: java:8-jdk
+    image: jenkinsci/ssh-slave
     depends_on:
       - master
     expose:
       - "22"
-    command: tail -f /dev/null
   slave1:
-    image: java:8-jdk
+    image: jenkinsci/ssh-slave
     depends_on:
         - master
     expose:
       - "22"
-    command: tail -f /dev/null
 
