@@ -1,0 +1,35 @@
+version: '2'
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/proxy.conf:/etc/nginx/conf.d/proxy.conf:ro
+    environment:
+      - NGINX_HOST=jenkins.cgd
+    depends_on:
+        - master
+  master:
+    image: jenkinsci/jenkins:latest
+    volumes:
+      - ./master/jenkins_home:/var/jenkins_home
+    expose:
+      - "8080"
+      - "5000"
+  slave0:
+    image: java:8-jdk
+    depends_on:
+      - master
+    expose:
+      - "22"
+    command: tail -f /dev/null
+  slave1:
+    image: java:8-jdk
+    depends_on:
+        - master
+    expose:
+      - "22"
+    command: tail -f /dev/null
+
