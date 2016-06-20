@@ -24,10 +24,12 @@ services:
       - master
     expose:
       - "22"
+    env_file: jenkins_pub_key.env
   slave1:
     image: jenkinsci/ssh-slave
     depends_on:
         - master
     expose:
       - "22"
+    env_file: jenkins_pub_key.env
 
